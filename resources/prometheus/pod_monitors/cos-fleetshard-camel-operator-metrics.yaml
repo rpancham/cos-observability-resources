@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: cos-fleetshard-camel-metrics
+  labels:
+    app: rhoc
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "cos-fleetshard-operator-camel"
+  namespaceSelector:
+    any: true
+  podMetricsEndpoints:
+    - path: /q/metrics
+      port: http
+      metricRelabelings:
+        - regex: endpoint|instance|job|namespace|receive|pod|prometheus
+          action: labeldrop

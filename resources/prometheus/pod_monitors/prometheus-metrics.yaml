@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: prometheus-metrics
+  labels: 
+    app: rhoc
+spec:
+  selector:
+    matchLabels:
+      app: "prometheus"
+  namespaceSelector:
+    any: true
+  podMetricsEndpoints:
+    - path: /metrics
+      port: web
+      metricRelabelings:
+        - regex: endpoint|instance|job|namespace|receive|pod|prometheus
+          action: labeldrop

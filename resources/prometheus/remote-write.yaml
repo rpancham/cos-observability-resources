@@ -1,0 +1,319 @@
+writeRelabelConfigs:
+  # WHAT: Reports the current amount of samples that have failed to be sent to observatorium
+  - action: replace
+    regex: prometheus_remote_storage_failed_samples_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  # WHAT: Reports the current amount of samples that have been successfully sent to observatorium
+  - action: replace
+    regex: prometheus_remote_storage_succeeded_samples_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
+  - action: replace
+    regex: prometheus_remote_storage_retried_samples_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  # WHAT: Reports the current amount of Prometheus remote storage shards
+  - action: replace
+    regex: prometheus_remote_storage_shards$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  # WHAT: Reports the desired amount of Prometheus remote storage shards
+  - action: replace
+    regex: prometheus_remote_storage_shards_desired$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  # WHAT: Reports maximum amount of Prometheus remote storage shards
+  - action: replace
+    regex: prometheus_remote_storage_shards_max$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  # WHAT: Reports minimum amount of Prometheus remote storage shards
+  - action: replace
+    regex: prometheus_remote_storage_shards_min$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  # WHAT: Gives the status of alerts, including alert state, severity.
+  - action: replace
+    regex: ALERTS$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  # Up Specific
+  - action: replace
+    regex: up$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: drop
+    regex: up$;openshift.*$
+    sourceLabels:
+      - __name__
+      - namespace
+  - action: drop
+    regex: ^;up$
+    sourceLabels:
+      - namespace
+      - __name__
+
+  # Network Specific
+  - action: replace
+    regex: container_network_transmit_bytes_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: container_network_receive_bytes_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: drop
+    regex: container_network.*;openshift.*$
+    sourceLabels:
+      - __name__
+      - namespace
+  - action: drop
+    regex: container_network.*;redhat-openshift-connectors-observability$
+    sourceLabels:
+      - __name__
+      - namespace
+  - action: drop
+    regex: ^;container_network.*$
+    sourceLabels:
+      - namespace
+      - __name__
+
+  # Camel-k Connector specific
+  - action: replace
+    regex: application_camel_context_uptime_seconds$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: application_camel_context_exchanges_.*$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: application_camel_route_count$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: vendor_memoryPool_usage_.*$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: application_camel_exchange_processing_seconds_count$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: application_camel_exchange_processing_rate_per_second$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: vendor_cpu_systemCpuLoad_percent$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: base_cpu_processCpuLoad_percent$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: base_cpu_systemLoadAverage$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: vendor_memory_usedNonHeap_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: vendor_memory_committedNonHeap_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: vendor_memoryPool_usage_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: vendor_memoryPool_usage_max_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: base_memory_usedHeap_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: base_memory_maxHeap_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: base_memory_committedHeap_bytes$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: application_camel_context_status$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: camel_k_reconciliation_duration_seconds_count$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  # WHAT: Custom Metrics exposed by the Applications
+  - action: replace
+    regex: cos_fleetshard_sync_connector_state$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: replace
+    regex: cos_fleetshard_sync_connector_state_count_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  # WHAT: Restart Status of a connector
+  - action: replace
+    regex: kube_pod_container_status_restarts_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+  - action: drop
+    regex: kube_pod_container_status_restarts_total$;redhat-openshift-connectors-observability$
+    sourceLabels:
+      - __name__
+      - namespace
+  - action: drop
+    regex: kube_pod_container_status_restarts_total$;redhat-openshift-connectors$
+    sourceLabels:
+      - __name__
+      - namespace
+
+  # Debezium Connector specific
+  - action: replace
+    regex: strimzi_reconciliations_failed_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: debezium_metrics_.*$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: kafka_connect_connector_task_status$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: kafka_connect_connector_status$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: kafka_connect_outgoing_byte_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: kafka_producer_requests_in_flight$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: process_cpu_seconds_total$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: jvm_memory_bytes_max$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  - action: replace
+    regex: jvm_memory_bytes_used$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
+  # LEAVE THIS AT BOTTOM OF FILE
+  - action: keep
+    regex: true$
+    sourceLabels:
+      - __tmp_keep
+  - action: labeldrop
+    regex: __tmp_keep

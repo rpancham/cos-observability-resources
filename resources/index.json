@@ -1,0 +1,57 @@
+{
+  "id": "managed-connectors",
+  "config": {
+    "alertmanager": {
+      "pagerDutySecretName": "redhat-managed-connectors-pagerduty",
+      "deadmansSnitchSecretName": "redhat-managed-connectors-deadmanssnitch"
+    },
+    "grafana": {
+      "dashboards": [
+        "grafana/overview.yaml",
+        "grafana/camelk-operators.yaml",
+        "grafana/strimzi-operators.yaml",
+        "grafana/camelk-connectors.yaml",
+        "grafana/connectors.yaml",
+        "grafana/debezium-connectors.yaml"
+      ]
+    },
+    "promtail": {
+      "enabled": false,
+      "observatorium": "default",
+      "namespaceLabelSelector": {
+        "observability-operator/scrape-logging": "true"
+      }
+    },
+    "prometheus": {
+      "pod_monitors": [
+        "prometheus/pod_monitors/camel-k-metrics.yaml",
+        "prometheus/pod_monitors/strimzi-metrics.yaml",
+        "prometheus/pod_monitors/cos-fleetshard-sync-operator-metrics.yaml",
+        "prometheus/pod_monitors/cos-fleetshard-camel-operator-metrics.yaml",
+        "prometheus/pod_monitors/cos-fleetshard-debezium-operator-metrics.yaml",
+        "prometheus/pod_monitors/cos-fleetshard-connectors-camel.yaml",
+        "prometheus/pod_monitors/cos-fleetshard-connectors-debezium.yaml",
+        "prometheus/pod_monitors/prometheus-metrics.yaml"
+      ],
+      "rules": [
+        "prometheus/prometheus-rules.yaml",
+        "prometheus/camel-k-operator-rules.yaml",
+        "prometheus/strimzi-operator-rules.yaml",
+        "prometheus/cos-fleetshard-sync-rules.yaml",
+        "prometheus/cos-fleetshard-operator-camel-rules.yaml",
+        "prometheus/cos-fleetshard-operator-debezium-rules.yaml",
+        "prometheus/connectors-slo-rules.yaml"
+      ],
+      "observatorium": "default",
+      "remoteWrite": "prometheus/remote-write.yaml",
+      "federation": "prometheus/federation-config.yaml",
+      "overridePrometheusPvcSize": "50Gi"
+    },
+    "observatoria": [
+      {
+        "id": "default",
+        "secretName": "observatorium-configuration-red-hat-sso"
+      }
+    ]
+  }
+}

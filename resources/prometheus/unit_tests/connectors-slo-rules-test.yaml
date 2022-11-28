@@ -1,0 +1,129 @@
+rule_files:
+  - /prometheus/rules.yaml
+
+evaluation_interval: 1m
+
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="cbvn81m9fbo9fmh5rn60", cos_connector_state="ready"}'
+        values: '1+1x2880'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="cbvn81m9fbo9fmh5rn60", cos_connector_state="stopped"}'
+        values: '0+0x2880'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="cbvn81m9fbo9fmh5rn60", cos_connector_state="failed_but_ready"}'
+        values: '0+0x2880'
+
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccbpo0absr9v601smbhg", cos_connector_state="ready"}'
+        values: '1+1x2880'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccbpo0absr9v601smbhg", cos_connector_state="stopped"}'
+        values: '0+0x2880'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccbpo0absr9v601smbhg", cos_connector_state="failed_but_ready"}'
+        values: '0+0x2880'
+
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccqpe7g8sdu754v02vn0", cos_connector_state="ready"}'
+        values: '1+1x1439 1440+0x119 1440+1x1319'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccqpe7g8sdu754v02vn0", cos_connector_state="stopped"}'
+        values: '0+0x2880'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccqpe7g8sdu754v02vn0", cos_connector_state="failed_but_ready"}'
+        values: '0+0x1439 1+1x119 120+0x1319'
+
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccqkkc33ts1p3ohhbq9g", cos_connector_state="ready"}'
+        values: '1+1x1499 1500+0x59 1440+1x1319'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccqkkc33ts1p3ohhbq9g", cos_connector_state="stopped"}'
+        values: '0+0x2880'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cos_connector_id="ccqkkc33ts1p3ohhbq9g", cos_connector_state="failed_but_ready"}'
+        values: '0+0x1499 1+1x59 120+0x1319'
+
+    promql_expr_test:
+      # recordings used in tested alerts, for clarity
+      # slo_connector_availability_failure_rate:ratio_rate5m
+      - expr: slo_connector_availability_failure_rate:ratio_rate5m
+        eval_time: 24h20m
+        exp_samples:
+          - labels: 'slo_connector_availability_failure_rate:ratio_rate5m'
+            value: 0.25
+      - expr: slo_connector_availability_failure_rate:ratio_rate5m
+        eval_time: 24h40m
+        exp_samples:
+          - labels: 'slo_connector_availability_failure_rate:ratio_rate5m'
+            value: 0.25
+      - expr: slo_connector_availability_failure_rate:ratio_rate5m
+        eval_time: 25h10m
+        exp_samples:
+          - labels: 'slo_connector_availability_failure_rate:ratio_rate5m'
+            value: 0.50
+
+      # slo_connector_availability_failure_rate:ratio_rate1h
+      - expr: slo_connector_availability_failure_rate:ratio_rate1h
+        eval_time: 24h20m
+        exp_samples:
+          - labels: 'slo_connector_availability_failure_rate:ratio_rate1h'
+            value: 8.750000000000001E-02
+      - expr: slo_connector_availability_failure_rate:ratio_rate1h
+        eval_time: 24h40m
+        exp_samples:
+          - labels: 'slo_connector_availability_failure_rate:ratio_rate1h'
+            value: 1.7083333333333334E-01
+      - expr: slo_connector_availability_failure_rate:ratio_rate1h
+        eval_time: 25h10m
+        exp_samples:
+          - labels: 'slo_connector_availability_failure_rate:ratio_rate1h'
+            value: 2.9583333333333334E-01
+
+    alert_rule_test:
+      # RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+      # For this scenario we have 4 connectors running for a total of 172800 a month
+      # 1 connector runs 43200 minutes a month (x4 = 172800). SLO 99.5% leaving a 0,5% of error capacity.
+      # Error Budget = 172800 * 0.5 / 100 = 864 minutes
+      # At at error rate of 0.25, it should trigger after 17.28 minutes which is the 2% of the error budget
+      - eval_time: 24h
+        alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts: []
+      - eval_time: 24h15m
+        alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts: []
+      - eval_time: 24h20m
+        alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+              severity: critical
+            exp_annotations:
+              summary: "High 1h/6h Connectors availability budget burn for RHOC (current value: 87.5m)"
+              description: "An error budget greater than 2% has been burnt in the last 1h/6h period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_availability_error_budget_burnt.adoc'
+      - eval_time: 25h10m
+        alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+              severity: critical
+            exp_annotations:
+              summary: "High 1h/6h Connectors availability budget burn for RHOC (current value: 295.8m)"
+              description: "An error budget greater than 2% has been burnt in the last 1h/6h period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_availability_error_budget_burnt.adoc'
+      - eval_time: 26h40m
+        alertname: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts: []
+
+      # RHOCConnectorsAvailability2hTo24HOr6hTo3dBudgetBurn
+      # For this scenario we have 4 connectors running for a total of 172800 a month
+      # 1 connector runs 43200 minutes a month (x4 = 172800). SLO 99.5% leaving a 0,5% of error capacity.
+      # Error Budget = 172800 * 0.5 / 100 = 864 minutes
+      # At at error rate of 0.25, it should trigger after 17.28 minutes which is the 2.5% of the error budget
+      - eval_time: 24h
+        alertname: RHOCConnectorsAvailability2hTo24HOr6hTo3dBudgetBurn
+        exp_alerts: []
+      - eval_time: 24h30m
+        alertname: RHOCConnectorsAvailability2hTo24HOr6hTo3dBudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability2hTo24HOr6hTo3dBudgetBurn
+              severity: critical
+            exp_annotations:
+              summary: "High 3d/24h Connectors availability budget burn for RHOC (current value: 5.269m)"
+              description: "An error budget greater than 2.5% has been burnt in the last 1d period or an error budget greater than 10% has been burnt in the last 3 days period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_availability_error_budget_burnt.adoc'
