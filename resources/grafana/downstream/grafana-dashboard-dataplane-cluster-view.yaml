@@ -34,7 +34,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1668156499133,
+      "iteration": 1669878269314,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -103,7 +103,15 @@ data:
                       "fixedColor": "yellow",
                       "mode": "fixed"
                     }
-                  },
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Immediately Deleted"
+                },
+                "properties": [
                   {
                     "id": "color",
                     "value": {
@@ -1187,7 +1195,7 @@ data:
                           "4": {
                             "color": "orange",
                             "index": 3,
-                            "text": "Stoped"
+                            "text": "Stopped"
                           },
                           "5": {
                             "color": "yellow",
@@ -2321,8 +2329,8 @@ data:
           {
             "current": {
               "selected": false,
-              "text": "rhoc-dev",
-              "value": "rhoc-dev"
+              "text": "None",
+              "value": ""
             },
             "datasource": {
               "type": "prometheus",
@@ -2346,7 +2354,7 @@ data:
           },
           {
             "current": {
-              "selected": true,
+              "selected": false,
               "text": "All",
               "value": "$__all"
             },
@@ -2380,6 +2388,6 @@ data:
       "timezone": "",
       "title": "Data Plane | Cluster view",
       "uid": "ov28Nbrnz",
-      "version": 5,
+      "version": 1,
       "weekStart": ""
     }
