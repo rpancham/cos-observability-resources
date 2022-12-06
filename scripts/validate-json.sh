@@ -2,7 +2,7 @@
 
 # This script checks that each Grafana dashboard contains valid JSON.
 
-validate_json(){
+validate_json() {
 	for DASHBOARD in $DASHBOARDS_DIR*;
 	do
 		let LINE_NUMBER=($(awk '/json:/{ print NR }' "$DASHBOARD")+1)

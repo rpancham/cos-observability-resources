@@ -7,21 +7,21 @@ function check() {
 	SEVERITY=$1
 
 	while IFS= read -r ALERT; do ALL_ALERTS+=($ALERT)
-	done < <(docker run --rm -v "${PROMETHEUS_RULES_DIR}":/workdir:z mikefarah/yq -N e '.spec.groups[]
+	done < <(yq -N eval-all '.spec.groups[]
 	| select(.name != "deadmanssnitch")
 	| .rules[].labels
 	| select(length!=0)
-	| select(.severity == '$SEVERITY')
+	| select(.severity == '"$SEVERITY"')
 	| parent
-	| .alert' "${CONNECTORS_SLO_RULES##*/}" "${CAMELK_OPERATOR_RULES##*/}" "${FLEETSHARD_CAMEL_OPERATOR_RULES##*/}" "${FLEETSHARD_DEBEZIUM_OPERATOR_RULES##*/}" "${FLEETSHARD_SYNC_RULES##*/}" "${STRIMZI_OPERATOR_RULES##*/}" | sort -u)
+	| .alert' "$PROMETHEUS_RULES_DIR"* | sort -u)
 
 	while IFS= read -r ALERT; do PROMETHEUS_UNIT_TEST_CHECK+=($ALERT)
 	done < <(yq -N eval-all '.tests[]
 	| .alert_rule_test[]
 	| .exp_alerts[]
 	| .exp_labels
-	| select(.severity == '$SEVERITY')
-	| .alertname' $UNIT_TEST_FILES* | sort -u)
+	| select(.severity == '"$SEVERITY"')
+	| .alertname' "$UNIT_TEST_FILES"* | sort -u)
 
 	ALERTS_WITHOUT_UNIT_TESTS=(`echo ${ALL_ALERTS[@]} ${PROMETHEUS_UNIT_TEST_CHECK[@]} | tr ' ' '\n' | sort | uniq -u `)
 

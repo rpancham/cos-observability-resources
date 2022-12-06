@@ -42,12 +42,9 @@ function check() {
     fi
 }
 
-check "$(realpath --relative-to . "${CONNECTORS_SLO_RULES}")"
-check "$(realpath --relative-to . "${CAMELK_OPERATOR_RULES}")"
-check "$(realpath --relative-to . "${FLEETSHARD_CAMEL_OPERATOR_RULES}")"
-check "$(realpath --relative-to . "${FLEETSHARD_DEBEZIUM_OPERATOR_RULES}")"
-check "$(realpath --relative-to . "${FLEETSHARD_SYNC_RULES}")"
-check "$(realpath --relative-to . "${STRIMZI_OPERATOR_RULES}")"
+for f in "${PROMETHEUS_RULES_DIR}"/*.yaml; do
+  check "$(realpath --relative-to . "${f}")"
+done
 
 if [ ${failed} -ne 0 ]; then
     exit 1;
