@@ -41,3 +41,15 @@ spec:
           replacement: $1
           action: replace
           targetLabel: deployment_id
+        - sourceLabels: [__meta_kubernetes_pod_label_cos_bf2_org_organisation_id]
+          separator: ;
+          regex: (.*)
+          replacement: $1
+          action: replace
+          targetLabel: organisation_id
+        - sourceLabels: [__meta_kubernetes_pod_label_cos_bf2_org_pricing_tier]
+          separator: ;
+          regex: (.*)
+          replacement: $1
+          action: replace
+          targetLabel: pricing_tier
