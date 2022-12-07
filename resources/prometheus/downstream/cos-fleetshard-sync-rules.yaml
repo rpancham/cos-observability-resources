@@ -25,4 +25,3 @@ spec:
             summary: 'the cos-fleetshard-sync operator is restarting frequently'
             description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
-

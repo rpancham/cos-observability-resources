@@ -1,0 +1,12 @@
+midstream:
+  - resources/grafana/downstream/**/*
+  - resources/grafana/downstream/*
+  - resources/prometheus/downstream/**/*
+  - resources/prometheus/downstream/*
+
+grafana:
+  - resources/grafana/downstream/*
+
+prometheus:
+  - resources/prometheus/**/*
+  - resources/prometheus/*
