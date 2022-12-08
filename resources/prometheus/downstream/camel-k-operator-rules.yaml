@@ -7,6 +7,7 @@ metadata:
 spec:
   groups:
     - name: camel-k-operator
+      interval: 10m
       rules:
         - alert: CamelKOperatorTargetDown
           expr: up{container="camel-k-operator"} !=1 or absent(up{container="camel-k-operator"})

@@ -7,6 +7,7 @@ metadata:
 spec:
   groups:
     - name: cos-fleetshard-operator-camel
+      interval: 10m
       rules:
         - alert: CosFleetShardOperatorCamelTargetDown
           expr: up{container="cos-fleetshard-operator-camel"} !=1 or absent(up{container="cos-fleetshard-operator-camel"})

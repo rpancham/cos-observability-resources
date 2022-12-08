@@ -35,8 +35,6 @@ for f in "${PROMETHEUS_RULES_DIR}"/*.yaml; do
   (tail -n "+$LN" "$f" ) >> "$WORK_DIR"/"$RULES_FILE";
 done
 
-cp "$WORK_DIR"/"$RULES_FILE" /tmp/rules.yaml
-
 docker run -t --name "${CONTAINER_NAME}" \
   -v "$WORK_DIR"/"$RULES_FILE":/prometheus/"$RULES_FILE":z \
   -v "$UNIT_TEST_DIR":/prometheus/unit_tests:z \

@@ -7,6 +7,7 @@ metadata:
 spec:
   groups:
     - name: cos-fleetshard-operator-debezium
+      interval: 10m
       rules:
         - alert: CosFleetShardOperatorDebeziumTargetDown
           expr: up{container="cos-fleetshard-operator-debezium"} !=1 or absent(up{container="cos-fleetshard-operator-debezium"})

@@ -7,6 +7,7 @@ metadata:
 spec:
   groups:
     - name: cos-fleetshard-sync
+      interval: 10m
       rules:
         - alert: CosFleetShardSyncTargetDown
           expr: up{container="cos-fleetshard-sync"} !=1 or absent(up{container="cos-fleetshard-sync"})

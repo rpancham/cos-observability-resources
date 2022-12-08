@@ -7,6 +7,7 @@ metadata:
 spec:
   groups:
     - name: strimzi-cluster-operator
+      interval: 10m
       rules:
         - alert: StrimziOperatorTargetDown
           expr: up{container="strimzi-cluster-operator"} !=1 or absent(up{container="strimzi-cluster-operator"})
