@@ -34,8 +34,8 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 27975,
-      "iteration": 1669905216039,
+      "id": 29566,
+      "iteration": 1670578436352,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -918,7 +918,7 @@ data:
             },
             "orientation": "auto",
             "showValue": "never",
-            "stacking": "none",
+            "stacking": "percent",
             "text": {},
             "tooltip": {
               "mode": "single",
@@ -936,7 +936,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "clamp_max(increase(cos_fleetshard_sync_connector_state_count_total{cos_connector_id=\"$connector_id\"}[5m]), 1)",
+              "expr": "rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_id=\"$connector_id\"}[10m])",
               "legendFormat": "{{cos_connector_state}}",
               "range": true,
               "refId": "A"
@@ -1274,8 +1274,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1364,8 +1363,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1454,8 +1452,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1557,8 +1554,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1659,8 +1655,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1761,8 +1756,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1888,8 +1882,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1973,7 +1966,7 @@ data:
           },
           {
             "current": {
-              "selected": true,
+              "selected": false,
               "text": "cc6ae6o7764p8lrcfbj0",
               "value": "cc6ae6o7764p8lrcfbj0"
             },
@@ -2025,9 +2018,9 @@ data:
           },
           {
             "current": {
-              "selected": true,
-              "text": "cdl60jtajgdagid3bov0",
-              "value": "cdl60jtajgdagid3bov0"
+              "selected": false,
+              "text": "cd1ur6dakkggo7fcikbg",
+              "value": "cd1ur6dakkggo7fcikbg"
             },
             "datasource": {
               "type": "prometheus",
@@ -2053,8 +2046,8 @@ data:
           {
             "current": {
               "selected": false,
-              "text": "mctr-cdl60k5ajgdagid3bp00",
-              "value": "mctr-cdl60k5ajgdagid3bp00"
+              "text": "mctr-cd1ur6bhl69lnuj0urn0",
+              "value": "mctr-cd1ur6bhl69lnuj0urn0"
             },
             "datasource": {
               "type": "prometheus",
