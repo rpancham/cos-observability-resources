@@ -27,7 +27,9 @@ tests:
               namespace: 'some_namespace'
             exp_annotations:
               summary: 'the camel-k operator target is down'
-              description: 'the camel-k operator target has been unable to sync the camel-k-operator container in the some_namespace namespace for longer than 10 minutes'
+              description: |
+                the camel-k operator target has been unable to sync the camel-k-operator
+                container in the some_namespace namespace for longer than 10 minutes
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 70m
         alertname: CamelKOperatorTargetDown

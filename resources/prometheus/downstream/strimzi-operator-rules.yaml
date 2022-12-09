@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -16,7 +17,9 @@ spec:
             severity: critical
           annotations:
             summary: 'the strimzi operator target is down'
-            description: 'the strimzi operator target has been unable to scrape the {{ $labels.container }} container in the {{ $labels.namespace }} namespace for longer than 10 minutes'
+            description: |
+              the strimzi operator target has been unable to scrape the {{ $labels.container }}
+              container in the {{ $labels.namespace }} namespace for longer than 10 minutes'
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: StrimziOperatorContainerFrequentlyRestarting
           expr: increase(kube_pod_container_status_restarts_total{container="strimzi-cluster-operator"}[60m]) > 3

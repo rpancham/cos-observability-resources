@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -10,33 +11,49 @@ spec:
       interval: 1m
       rules:
         - expr: |
-            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[5m])) 
+            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[5m]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[5m])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[5m])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[5m]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[5m]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate5m
           labels:
             tenant: rhoc
 
         - expr: |
-            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[30m])) 
+            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[30m]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[30m])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[30m])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[30m]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[30m]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate30m
           labels:
             tenant: rhoc
 
         - expr: |
-            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[1h])) 
+            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[1h]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[1h])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[1h])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[1h]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[1h]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate1h
           labels:
             tenant: rhoc
 
         - expr: |
-            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[2h])) 
+            sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[2h]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[2h])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[2h])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[2h]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[2h]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate2h
           labels:
             tenant: rhoc
@@ -44,7 +61,11 @@ spec:
         - expr: |
             sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[6h]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[6h])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[6h])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[6h]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[6h]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate6h
           labels:
             tenant: rhoc
@@ -52,7 +73,11 @@ spec:
         - expr: |
             sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[12h]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[12h])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[12h])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[12h]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[12h]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate12h
           labels:
             tenant: rhoc
@@ -60,7 +85,11 @@ spec:
         - expr: |
             sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[24h]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[24h])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[24h])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[24h]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[24h]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate24h
           labels:
             tenant: rhoc
@@ -68,7 +97,11 @@ spec:
         - expr: |
             sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[3d]))
             /
-            ( sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[3d])) + sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[3d])) )
+            (
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="ready"}[3d]))
+              +
+              sum by (cluster_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="failed_but_ready"}[3d]))
+            )
           record: slo_connector_availability_failure_rate:ratio_rate3d
           labels:
             tenant: rhoc
@@ -113,7 +146,7 @@ spec:
             severity: critical
           annotations:
             summary: 'High 3d/24h Connectors availability budget burn for RHOC (current value: {{ $value | humanize }})'
-            description: 'An error budget greater than 2.5% has been burnt in the last 1d period or an error budget greater 
+            description: 'An error budget greater than 2.5% has been burnt in the last 1d period or an error budget greater
               than 10% has been burnt in the last 3 days period'
             dashboard: 'https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1'
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_availability_error_budget_burnt.adoc'

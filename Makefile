@@ -1,5 +1,6 @@
 export UNIT_TEST_DIR ?= $(shell pwd)/resources/prometheus/unit_tests/
 export PROMETHEUS_RULES_DIR ?= $(shell pwd)/resources/prometheus/downstream/
+export CONFIG_DIR ?= $(shell pwd)/config/
 export IMAGE ?= quay.io/prometheus/prometheus
 export DASHBOARDS_DIR ?= $(shell pwd)/resources/grafana/downstream/
 export INDEX_FILE_PATH ?= $(shell pwd)/resources/index.json
@@ -10,8 +11,13 @@ export RHOC_SOPS_REPO_ORG ?= bf2fc6cc711aee1a0c2a
 
 # Checks the prometheus rules in the given rules files
 .PHONY: check/rules
-check/rules:
+check/rules:$(shell pwd)
 	./scripts/rules-check.sh
+
+# Lint rule files
+.PHONY: lint/rules
+lint/rules:$(shell pwd)
+	./scripts/rules-lint.sh
 
 # Check that each dashboard is valid JSON
 .PHONY: validate/dashboards
@@ -39,4 +45,4 @@ validate/sop_url_links:$(shell pwd)
 
 # Run all test targets
 .PHONY: run/tests
-run/tests: alerts/sop_url_exists validate/sop_url_links validate/dashboards validate/index check/rules check/unit-tests
+run/tests: lint/rules alerts/sop_url_exists validate/sop_url_links validate/dashboards validate/index check/rules check/unit-tests
