@@ -21,6 +21,7 @@ spec:
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: CamelKOperatorContainerFrequentlyRestarting
           expr: increase(kube_pod_container_status_restarts_total{container="camel-k-operator"}[60m]) > 3
+          for: 10m
           labels:
             severity: critical
             service: 'rhoc-camel-k-operator'

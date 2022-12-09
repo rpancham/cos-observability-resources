@@ -20,6 +20,7 @@ spec:
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: CosFleetShardSyncContainerFrequentlyRestarting
           expr: increase(kube_pod_container_status_restarts_total{container="cos-fleetshard-sync"}[60m]) > 3
+          for: 10m
           labels:
             severity: critical
           annotations:
