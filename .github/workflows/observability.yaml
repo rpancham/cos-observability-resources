@@ -16,7 +16,7 @@ on:
       - development
 
 env:
-  ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+  ACCESS_TOKEN_SECRET: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:

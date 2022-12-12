@@ -6,10 +6,23 @@ evaluation_interval: 1m
 tests:
   - interval: 1m
     input_series:
-      - series: 'up{container="cos-fleetshard-sync", namespace="some_namespace"}'
-        values: '1+0x30 0+0x30 1+0x30'
-      - series: 'kube_pod_container_status_restarts_total{container="cos-fleetshard-sync", namespace="some_namespace"}'
-        values: '0+0x30 1+1x30 0+0x100'
+      - series: 'up{container="cos-fleetshard-sync", cluster_id="cafmth1l8123ida8obm0"}'
+        values: '1+0x30 0+0x30 1+0x120'
+      - series: 'up{container="cos-fleetshard-sync", cluster_id="cchi5bvod5s2tjbeh7ag"}'
+        values: '1+0x180'
+      - series: 'up{container="cos-fleetshard-sync", cluster_id="ce85sscmo9pbcfol9e9g"}'
+        values: '1+0x60 0+0x60 1+0x60'
+      - series: 'up{container="cos-fleetshard-sync", cluster_id="ce8q91ug0sma721hcokg"}'
+        values: '1+0x90 0+0x30 1+0x60'
+
+      - series: 'kube_pod_container_status_restarts_total{container="cos-fleetshard-sync", cluster_id="cafmth1l8123ida8obm0"}'
+        values: '0+0x30 1+1x30 0+0x180'
+      - series: 'kube_pod_container_status_restarts_total{container="cos-fleetshard-sync", cluster_id="cchi5bvod5s2tjbeh7ag"}'
+        values: '0+0x240'
+      - series: 'kube_pod_container_status_restarts_total{container="cos-fleetshard-sync", cluster_id="ce85sscmo9pbcfol9e9g"}'
+        values: '0+0x60 1+1x60 0+0x120'
+      - series: 'kube_pod_container_status_restarts_total{container="cos-fleetshard-sync", cluster_id="ce8q91ug0sma721hcokg"}'
+        values: '0+0x120 1+1x30 0+0x90'
 
     alert_rule_test:
       # CosFleetShardSyncTargetDown test units
@@ -22,17 +35,52 @@ tests:
           - exp_labels:
               alertname: CosFleetShardSyncTargetDown
               severity: critical
-              container: 'cos-fleetshard-sync'
-              namespace: 'some_namespace'
+              cluster_id: cafmth1l8123ida8obm0
             exp_annotations:
               summary: 'the cos-fleetshard-sync target is down'
               description: |
-                the cos-fleetshard-sync target has been unable to scrape the cos-fleetshard-sync
-                container in the some_namespace namespace for longer than 10 minutes
+                prometheus has been unable to scrape the cos-fleetshard-sync pod in the
+                cluster: cafmth1l8123ida8obm0 for longer than 10 minutes
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
-      - eval_time: 70m
+      - eval_time: 80m
         alertname: CosFleetShardSyncTargetDown
-        exp_alerts: [ ]
+        exp_alerts:
+          - exp_labels:
+              alertname: CosFleetShardSyncTargetDown
+              severity: critical
+              cluster_id: ce85sscmo9pbcfol9e9g
+            exp_annotations:
+              summary: 'the cos-fleetshard-sync target is down'
+              description: |
+                prometheus has been unable to scrape the cos-fleetshard-sync pod in the
+                cluster: ce85sscmo9pbcfol9e9g for longer than 10 minutes
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
+      - eval_time: 115m
+        alertname: CosFleetShardSyncTargetDown
+        exp_alerts:
+          - exp_labels:
+              alertname: CosFleetShardSyncTargetDown
+              severity: critical
+              cluster_id: ce85sscmo9pbcfol9e9g
+            exp_annotations:
+              summary: 'the cos-fleetshard-sync target is down'
+              description: |
+                prometheus has been unable to scrape the cos-fleetshard-sync pod in the
+                cluster: ce85sscmo9pbcfol9e9g for longer than 10 minutes
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
+          - exp_labels:
+              alertname: CosFleetShardSyncTargetDown
+              severity: critical
+              cluster_id: ce8q91ug0sma721hcokg
+            exp_annotations:
+              summary: 'the cos-fleetshard-sync target is down'
+              description: |
+                prometheus has been unable to scrape the cos-fleetshard-sync pod in the
+                cluster: ce8q91ug0sma721hcokg for longer than 10 minutes
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
+      - eval_time: 150m
+        alertname: CosFleetShardSyncTargetDown
+        exp_alerts: []
 
       # CosFleetShardSyncContainerFrequentlyRestarting test units
       - eval_time: 10m
@@ -44,12 +92,45 @@ tests:
           - exp_labels:
               alertname: CosFleetShardSyncContainerFrequentlyRestarting
               severity: critical
-              container: 'cos-fleetshard-sync'
-              namespace: 'some_namespace'
+              cluster_id: cafmth1l8123ida8obm0
             exp_annotations:
-              summary: 'the cos-fleetshard-sync operator is restarting frequently'
+              summary: |
+                the cos-fleetshard-sync pod is restarting frequently in cluster: cafmth1l8123ida8obm0
+              description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
+      - eval_time: 130m
+        alertname: CosFleetShardSyncContainerFrequentlyRestarting
+        exp_alerts:
+          - exp_labels:
+              alertname: CosFleetShardSyncContainerFrequentlyRestarting
+              severity: critical
+              cluster_id: ce85sscmo9pbcfol9e9g
+            exp_annotations:
+              summary: |
+                the cos-fleetshard-sync pod is restarting frequently in cluster: ce85sscmo9pbcfol9e9g
               description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 160m
+        alertname: CosFleetShardSyncContainerFrequentlyRestarting
+        exp_alerts:
+          - exp_labels:
+              alertname: CosFleetShardSyncContainerFrequentlyRestarting
+              severity: critical
+              cluster_id: ce85sscmo9pbcfol9e9g
+            exp_annotations:
+              summary: |
+                the cos-fleetshard-sync pod is restarting frequently in cluster: ce85sscmo9pbcfol9e9g
+              description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
+          - exp_labels:
+              alertname: CosFleetShardSyncContainerFrequentlyRestarting
+              severity: critical
+              cluster_id: ce8q91ug0sma721hcokg
+            exp_annotations:
+              summary: |
+                the cos-fleetshard-sync pod is restarting frequently in cluster: ce8q91ug0sma721hcokg
+              description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
+      - eval_time: 230m
         alertname: CosFleetShardSyncContainerFrequentlyRestarting
         exp_alerts: [ ]

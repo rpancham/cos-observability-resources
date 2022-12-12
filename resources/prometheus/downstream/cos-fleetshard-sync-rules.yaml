@@ -11,22 +11,23 @@ spec:
       interval: 10m
       rules:
         - alert: CosFleetShardSyncTargetDown
-          expr: up{container="cos-fleetshard-sync"} !=1 or absent(up{container="cos-fleetshard-sync"})
+          expr: group by (cluster_id) (up{container="cos-fleetshard-sync"} !=1 or absent(up{container="cos-fleetshard-sync"}))
           for: 10m
           labels:
             severity: critical
           annotations:
             summary: 'the cos-fleetshard-sync target is down'
             description: |
-              the cos-fleetshard-sync target has been unable to scrape the {{ $labels.container }}
-              container in the {{ $labels.namespace }} namespace for longer than 10 minutes
+              prometheus has been unable to scrape the cos-fleetshard-sync pod in the
+              cluster: {{ $labels.cluster_id }} for longer than 10 minutes
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: CosFleetShardSyncContainerFrequentlyRestarting
-          expr: increase(kube_pod_container_status_restarts_total{container="cos-fleetshard-sync"}[60m]) > 3
+          expr: group by (cluster_id) (increase(kube_pod_container_status_restarts_total{container="cos-fleetshard-sync"}[60m]) > 3)
           for: 10m
           labels:
             severity: critical
           annotations:
-            summary: 'the cos-fleetshard-sync operator is restarting frequently'
+            summary: |
+              the cos-fleetshard-sync pod is restarting frequently in cluster: {{ $labels.cluster_id }}
             description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
