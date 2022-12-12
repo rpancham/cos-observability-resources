@@ -1,4 +1,4 @@
-name: rhoc-observability-run-tests
+name: rhoc tests
 
 on:
   push:
