@@ -1,9 +1,6 @@
-name: rhoc-observability-labeler
-
+name: "Pull Request Labeler"
 on:
-  pull_request:
-    branches:
-      - main
+  - pull_request_target
 
 jobs:
   triage:
@@ -14,5 +11,4 @@ jobs:
     steps:
       - uses: actions/labeler@v4
         with:
-          repo-token: "${{ secrets.ACCESS_TOKEN_SECRET }}"
-          sync-labels: true
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
