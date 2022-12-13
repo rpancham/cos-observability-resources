@@ -35,7 +35,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1668156474867,
+      "iteration": 1670874441248,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -165,9 +165,11 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "abs(count(cos_fleetshard_sync_connector_state) - count(cos_fleetshard_sync_connector_state offset $__range))",
+              "instant": true,
               "legendFormat": "Connectors Created",
-              "range": true,
+              "range": false,
               "refId": "A"
             },
             {
@@ -176,10 +178,12 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "count((min_over_time(cos_fleetshard_sync_connector_state[$__range]) == 1) unless cos_fleetshard_sync_connector_state offset $__range)",
               "hide": false,
+              "instant": true,
               "legendFormat": "Successful",
-              "range": true,
+              "range": false,
               "refId": "B"
             },
             {
@@ -188,10 +192,12 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "count((min_over_time(cos_fleetshard_sync_connector_state[$__range]) == 2) unless cos_fleetshard_sync_connector_state offset $__range)",
               "hide": false,
+              "instant": true,
               "legendFormat": "Failed",
-              "range": true,
+              "range": false,
               "refId": "C"
             },
             {
@@ -200,10 +206,12 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "count((min_over_time(cos_fleetshard_sync_connector_state[$__range]) == 3) unless cos_fleetshard_sync_connector_state offset $__range)",
               "hide": false,
+              "instant": true,
               "legendFormat": "Immediately Deleted",
-              "range": true,
+              "range": false,
               "refId": "D"
             },
             {
@@ -212,10 +220,12 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "count((min_over_time(cos_fleetshard_sync_connector_state[$__range]) == 5) unless cos_fleetshard_sync_connector_state offset $__range)",
               "hide": false,
+              "instant": true,
               "legendFormat": "Still Provisioning",
-              "range": true,
+              "range": false,
               "refId": "E"
             }
           ],
@@ -276,9 +286,11 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "count by(cos_connector_type_id) ( cos_fleetshard_sync_connector_state unless cos_fleetshard_sync_connector_state offset $__range )",
+              "instant": true,
               "legendFormat": "__auto",
-              "range": true,
+              "range": false,
               "refId": "A"
             }
           ],
@@ -1378,7 +1390,8 @@ data:
                     "value": null
                   }
                 ]
-              }
+              },
+              "unit": "short"
             },
             "overrides": [
               {
@@ -1766,7 +1779,7 @@ data:
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                  "lastNotNull"
+                "lastNotNull"
               ],
               "fields": "",
               "values": false
@@ -1863,7 +1876,7 @@ data:
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                  "mean"
+                "mean"
               ],
               "fields": "",
               "values": false
@@ -2011,6 +2024,6 @@ data:
       "timezone": "",
       "title": "Data Plane | Overview",
       "uid": "3lmqGVq7z",
-      "version": 6,
+      "version": 1,
       "weekStart": ""
     }
