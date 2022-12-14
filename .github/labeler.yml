@@ -1,12 +1,18 @@
 midstream:
-  - resources/grafana/downstream/**/*
-  - resources/grafana/downstream/*
-  - resources/prometheus/downstream/**/*
-  - resources/prometheus/downstream/*
+  - resources/grafana/downstream/*.yaml
+  - resources/prometheus/downstream/*.yaml
 
 grafana:
-  - resources/grafana/downstream/*
+  - resources/grafana/downstream/*.yaml
+  - resources/grafana/*.yaml
 
 prometheus:
-  - resources/prometheus/**/*
-  - resources/prometheus/*
+  - resources/prometheus/downstream/*.yaml
+  - resources/prometheus/*.yaml
+
+legacy:
+  - resources/grafana/*.yaml
+  - resources/prometheus/*.yaml
+
+test:
+  - resources/prometheus/unit_tests/*
