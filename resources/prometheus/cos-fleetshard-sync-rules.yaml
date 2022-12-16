@@ -14,15 +14,21 @@ spec:
           labels:
             severity: critical
           annotations:
-            summary: 'the cos-fleetshard-sync target is down'
-            description: 'the cos-fleetshard-sync target has been unable to scrape the {{ $labels.container }} container in the {{ $labels.namespace }} namespace for longer than 10 minutes'
+            summary: |
+              the fleetshard-sync operator is down
+            description: |
+              prometheus was unable to scrape the fleetshard-sync operator for longer than 10 minutes.
+              This most likely means that the fleetshard-sync operator pod is unable to start
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: CosFleetShardSyncContainerFrequentlyRestarting
           expr: increase(kube_pod_container_status_restarts_total{container="cos-fleetshard-sync"}[60m]) > 3
+          for: 10m
           labels:
             severity: critical
           annotations:
-            summary: 'the cos-fleetshard-sync operator is restarting frequently'
-            description: 'the cos-fleetshard-sync operator container restarted frequently in the last 60 minutes'
+            summary: |
+              the fleetshard-sync operator is restarting frequently
+            description: |
+              in the previous 60 minutes, the fleetshard-sync operator restarted frequently(more than 3 times)
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
 

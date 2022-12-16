@@ -13,17 +13,21 @@ spec:
           for: 10m
           labels:
             severity: critical
-            service: 'rhoc-camel-k-operator'
           annotations:
-            summary: 'the camel-k operator target is down'
-            description: 'the camel-k operator target has been unable to sync the {{ $labels.container }} container in the {{ $labels.namespace }} namespace for longer than 10 minutes'
+            summary: |
+              the camelk operator is down
+            description: |
+              prometheus was unable to scrape the camelk operator for longer than 10 minutes.
+              This most likely means that the camelk operator pod is unable to start
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: CamelKOperatorContainerFrequentlyRestarting
           expr: increase(kube_pod_container_status_restarts_total{container="camel-k-operator"}[60m]) > 3
+          for: 10m
           labels:
             severity: critical
-            service: 'rhoc-camel-k-operator'
           annotations:
-            summary: 'the camel-k operator is restarting frequently'
-            description: 'the camel-k operator container restarted frequently in the last 60 minutes'
+            summary: |
+              the camelk operator is restarting frequently
+            description: |
+              in the previous 60 minutes, the camelk operator restarted frequently(more than 3 times)
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'

@@ -37,10 +37,11 @@ tests:
               severity: critical
               cluster_id: cafmth1l8123ida8obm0
             exp_annotations:
-              summary: 'the cos-fleetshard-operator-camel target is down'
+              summary: |
+                the fleetshard-camel operator is down in cluster: cafmth1l8123ida8obm0
               description: |
-                prometheus has been unable to scrape the cos-fleetshard-operator-camel pod in the
-                cluster: cafmth1l8123ida8obm0 for longer than 10 minutes
+                prometheus was unable to scrape the fleetshard-camel operator in the cluster: cafmth1l8123ida8obm0 for longer than 10 minutes.
+                This most likely means that the fleetshard-camel operator pod is unable to start
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 80m
         alertname: CosFleetShardOperatorCamelTargetDown
@@ -50,10 +51,11 @@ tests:
               severity: critical
               cluster_id: ce85sscmo9pbcfol9e9g
             exp_annotations:
-              summary: 'the cos-fleetshard-operator-camel target is down'
+              summary: |
+                the fleetshard-camel operator is down in cluster: ce85sscmo9pbcfol9e9g
               description: |
-                prometheus has been unable to scrape the cos-fleetshard-operator-camel pod in the
-                cluster: ce85sscmo9pbcfol9e9g for longer than 10 minutes
+                prometheus was unable to scrape the fleetshard-camel operator in the cluster: ce85sscmo9pbcfol9e9g for longer than 10 minutes.
+                This most likely means that the fleetshard-camel operator pod is unable to start
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 115m
         alertname: CosFleetShardOperatorCamelTargetDown
@@ -63,20 +65,22 @@ tests:
               severity: critical
               cluster_id: ce85sscmo9pbcfol9e9g
             exp_annotations:
-              summary: 'the cos-fleetshard-operator-camel target is down'
+              summary: |
+                the fleetshard-camel operator is down in cluster: ce85sscmo9pbcfol9e9g
               description: |
-                prometheus has been unable to scrape the cos-fleetshard-operator-camel pod in the
-                cluster: ce85sscmo9pbcfol9e9g for longer than 10 minutes
+                prometheus was unable to scrape the fleetshard-camel operator in the cluster: ce85sscmo9pbcfol9e9g for longer than 10 minutes.
+                This most likely means that the fleetshard-camel operator pod is unable to start
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
           - exp_labels:
               alertname: CosFleetShardOperatorCamelTargetDown
               severity: critical
               cluster_id: ce8q91ug0sma721hcokg
             exp_annotations:
-              summary: 'the cos-fleetshard-operator-camel target is down'
+              summary: |
+                the fleetshard-camel operator is down in cluster: ce8q91ug0sma721hcokg
               description: |
-                prometheus has been unable to scrape the cos-fleetshard-operator-camel pod in the
-                cluster: ce8q91ug0sma721hcokg for longer than 10 minutes
+                prometheus was unable to scrape the fleetshard-camel operator in the cluster: ce8q91ug0sma721hcokg for longer than 10 minutes.
+                This most likely means that the fleetshard-camel operator pod is unable to start
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 150m
         alertname: CosFleetShardOperatorCamelTargetDown
@@ -95,8 +99,10 @@ tests:
               cluster_id: cafmth1l8123ida8obm0
             exp_annotations:
               summary: |
-                the cos-fleetshard-operator-camel pod is restarting frequently in cluster: cafmth1l8123ida8obm0
-              description: 'the cos-fleetshard-operator-camel operator container restarted frequently in the last 60 minutes'
+                the fleetshard-camel operator is restarting frequently in cluster: cafmth1l8123ida8obm0
+              description: |
+                in the previous 60 minutes, the fleetshard-camel operator restarted frequently(more than 3 times)
+                in cluster: cafmth1l8123ida8obm0
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 130m
         alertname: CosFleetShardOperatorCamelContainerFrequentlyRestarting
@@ -107,8 +113,10 @@ tests:
               cluster_id: ce85sscmo9pbcfol9e9g
             exp_annotations:
               summary: |
-                the cos-fleetshard-operator-camel pod is restarting frequently in cluster: ce85sscmo9pbcfol9e9g
-              description: 'the cos-fleetshard-operator-camel operator container restarted frequently in the last 60 minutes'
+                the fleetshard-camel operator is restarting frequently in cluster: ce85sscmo9pbcfol9e9g
+              description: |
+                in the previous 60 minutes, the fleetshard-camel operator restarted frequently(more than 3 times)
+                in cluster: ce85sscmo9pbcfol9e9g
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 160m
         alertname: CosFleetShardOperatorCamelContainerFrequentlyRestarting
@@ -119,8 +127,10 @@ tests:
               cluster_id: ce85sscmo9pbcfol9e9g
             exp_annotations:
               summary: |
-                the cos-fleetshard-operator-camel pod is restarting frequently in cluster: ce85sscmo9pbcfol9e9g
-              description: 'the cos-fleetshard-operator-camel operator container restarted frequently in the last 60 minutes'
+                the fleetshard-camel operator is restarting frequently in cluster: ce85sscmo9pbcfol9e9g
+              description: |
+                in the previous 60 minutes, the fleetshard-camel operator restarted frequently(more than 3 times)
+                in cluster: ce85sscmo9pbcfol9e9g
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
           - exp_labels:
               alertname: CosFleetShardOperatorCamelContainerFrequentlyRestarting
@@ -128,8 +138,10 @@ tests:
               cluster_id: ce8q91ug0sma721hcokg
             exp_annotations:
               summary: |
-                the cos-fleetshard-operator-camel pod is restarting frequently in cluster: ce8q91ug0sma721hcokg
-              description: 'the cos-fleetshard-operator-camel operator container restarted frequently in the last 60 minutes'
+                the fleetshard-camel operator is restarting frequently in cluster: ce8q91ug0sma721hcokg
+              description: |
+                in the previous 60 minutes, the fleetshard-camel operator restarted frequently(more than 3 times)
+                in cluster: ce8q91ug0sma721hcokg
               sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
       - eval_time: 230m
         alertname: CosFleetShardOperatorCamelContainerFrequentlyRestarting

@@ -16,10 +16,11 @@ spec:
           labels:
             severity: critical
           annotations:
-            summary: 'the strimzi-cluster-operator target is down'
+            summary: |
+              the debezium operator is down in cluster: {{ $labels.cluster_id }}
             description: |
-              prometheus has been unable to scrape the strimzi-cluster-operator pod in the
-              cluster: {{ $labels.cluster_id }} for longer than 10 minutes
+              prometheus was unable to scrape the debezium operator in the cluster: {{ $labels.cluster_id }} for longer than 10 minutes.
+              This most likely means that the debezium operator pod is unable to start
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
         - alert: StrimziOperatorContainerFrequentlyRestarting
           expr: group by (cluster_id) (increase(kube_pod_container_status_restarts_total{container="strimzi-cluster-operator"}[60m]) > 3)
@@ -28,6 +29,8 @@ spec:
             severity: critical
           annotations:
             summary: |
-              the strimzi-cluster-operator pod is restarting frequently in cluster: {{ $labels.cluster_id }}
-            description: 'the strimzi-cluster-operator container restarted frequently in the last 60 minutes'
+              the debezium operator is restarting frequently in cluster: {{ $labels.cluster_id }}
+            description: |
+              in the previous 60 minutes, the debezium operator restarted frequently(more than 3 times)
+              in cluster: {{ $labels.cluster_id }}
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/container_down.adoc'
