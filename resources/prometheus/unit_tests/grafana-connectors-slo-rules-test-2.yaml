@@ -1,0 +1,92 @@
+rule_files:
+  - /prometheus/rules.yaml
+
+evaluation_interval: 1m
+
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cchi5bvod5s2tjbeh7ag", cos_connector_id="cbvn81m9fbo9fmh5rn60", cos_connector_state="ready"}'
+        values: '1+1x399'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cchi5bvod5s2tjbeh7ag", cos_connector_id="cbvn81m9fbo9fmh5rn60", cos_connector_state="failed_but_ready"}'
+        values: '0+0x399'
+
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="cbvn81m9fbo9fmh5rn61", cos_connector_state="ready"}'
+        values: '1+1x398'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="cbvn81m9fbo9fmh5rn61", cos_connector_state="failed_but_ready"}'
+        values: '0+0x398 1'
+
+      - series: 'application_camel_context_exchanges_completed_total{cluster_id="cchi5bvod5s2tjbeh7ag", connector_id="cbvn81m9fbo9fmh5rn60"}'
+        values: '1+1x399'
+      - series: 'application_camel_context_exchanges_total{cluster_id="cchi5bvod5s2tjbeh7ag", connector_id="cbvn81m9fbo9fmh5rn60"}'
+        values: '1+1x399'
+      - series: 'application_camel_context_exchanges_failed_total{cluster_id="cchi5bvod5s2tjbeh7ag", connector_id="cbvn81m9fbo9fmh5rn60"}'
+        values: '0+0x399'
+
+      - series: 'application_camel_context_exchanges_completed_total{cluster_id="cafmth1l8123ida8obm0", connector_id="cbvn81m9fbo9fmh5rn61"}'
+        values: '1+1x398'
+      - series: 'application_camel_context_exchanges_total{cluster_id="cafmth1l8123ida8obm0", connector_id="cbvn81m9fbo9fmh5rn61"}'
+        values: '1+1x399'
+      - series: 'application_camel_context_exchanges_failed_total{cluster_id="cafmth1l8123ida8obm0", connector_id="cbvn81m9fbo9fmh5rn61"}'
+        values: '0+0x398 1'
+
+    promql_expr_test:
+      #Testing Remaining Error Budget for Availability
+      - expr: slo_connector_availability_remaining_error_budget:ratio_rate28d
+        eval_time: 400m
+        exp_samples:
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate28d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate28d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 4.9937578418090056E-01
+      - expr: slo_connector_availability_remaining_error_budget:ratio_rate28d
+        eval_time: 398m
+        exp_samples:
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate28d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate28d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 1
+      - expr: slo_connector_availability_remaining_error_budget:ratio_rate7d
+        eval_time: 400m
+        exp_samples:
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate7d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate7d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 4.9937578418090056E-01
+      - expr: slo_connector_availability_remaining_error_budget:ratio_rate7d
+        eval_time: 398m
+        exp_samples:
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate7d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_availability_remaining_error_budget:ratio_rate7d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 1
+
+      #Testing Remaining Error Budget for Exchanges
+      - expr: slo_connector_data_remaining_error_budget:ratio_rate28d
+        eval_time: 400m
+        exp_samples:
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate28d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate28d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 4.999968749804688E-01
+      - expr: slo_connector_data_remaining_error_budget:ratio_rate28d
+        eval_time: 398m
+        exp_samples:
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate28d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate28d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 1
+      - expr: slo_connector_data_remaining_error_budget:ratio_rate7d
+        eval_time: 400m
+        exp_samples:
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate7d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate7d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 4.999968749804688E-01
+      - expr: slo_connector_data_remaining_error_budget:ratio_rate7d
+        eval_time: 398m
+        exp_samples:
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate7d{cluster_id="cchi5bvod5s2tjbeh7ag", tenant="rhoc"}'
+            value: 1
+          - labels: 'slo_connector_data_remaining_error_budget:ratio_rate7d{cluster_id="cafmth1l8123ida8obm0", tenant="rhoc"}'
+            value: 1
