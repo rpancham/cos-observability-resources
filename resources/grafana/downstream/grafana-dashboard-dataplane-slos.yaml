@@ -35,7 +35,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1669878097612,
+      "iteration": 1671544242149,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -92,8 +92,8 @@ data:
               "custom": {
                 "axisLabel": "Availability",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
-                "axisSoftMin": 93.9,
+                "axisSoftMax": 1,
+                "axisSoftMin": 0.939,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -119,6 +119,7 @@ data:
                   "mode": "line"
                 }
               },
+              "decimals": 2,
               "links": [
                 {
                   "targetBlank": true,
@@ -127,6 +128,8 @@ data:
                 }
               ],
               "mappings": [],
+              "max": 100,
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -136,11 +139,11 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 99.5
+                    "value": 0.995
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -150,7 +153,7 @@ data:
             "x": 0,
             "y": 6
           },
-          "id": 17,
+          "id": 36,
           "options": {
             "legend": {
               "calcs": [],
@@ -169,7 +172,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) /\n( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) + sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) ) ) * 100",
+              "expr": "slo_connector_availability_success_rate:ratio_rate28d{cluster_id=~\"$Cluster\"}",
               "legendFormat": "Cluster ID: {{cluster_id}}",
               "range": true,
               "refId": "A"
@@ -191,7 +194,7 @@ data:
               "custom": {
                 "axisLabel": "",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
+                "axisSoftMax": 1,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -217,6 +220,7 @@ data:
                   "mode": "off"
                 }
               },
+              "decimals": 2,
               "links": [
                 {
                   "targetBlank": true,
@@ -225,6 +229,8 @@ data:
                 }
               ],
               "mappings": [],
+              "max": 100,
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -234,7 +240,7 @@ data:
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -244,7 +250,7 @@ data:
             "x": 12,
             "y": 6
           },
-          "id": 19,
+          "id": 33,
           "options": {
             "legend": {
               "calcs": [],
@@ -263,7 +269,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "clamp_min(( ( ( 0.005 * ( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) + sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) ) ) - sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) ) / ( 0.005 * ( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) + sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) ) ) ) * 100, 0)",
+              "expr": "slo_connector_availability_remaining_error_budget:ratio_rate28d{cluster_id=~\"$Cluster\"}",
               "legendFormat": "Cluster ID: {{cluster_id}}",
               "range": true,
               "refId": "A"
@@ -285,8 +291,8 @@ data:
               "custom": {
                 "axisLabel": "Availability",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
-                "axisSoftMin": 93.9,
+                "axisSoftMax": 1,
+                "axisSoftMin": 0.939,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -312,6 +318,7 @@ data:
                   "mode": "line"
                 }
               },
+              "decimals": 2,
               "links": [
                 {
                   "targetBlank": true,
@@ -320,6 +327,8 @@ data:
                 }
               ],
               "mappings": [],
+              "max": 100,
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -329,11 +338,11 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 99.5
+                    "value": 0.995
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -343,7 +352,7 @@ data:
             "x": 0,
             "y": 16
           },
-          "id": 26,
+          "id": 34,
           "options": {
             "legend": {
               "calcs": [],
@@ -362,7 +371,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) /\n( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) + sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) ) ) * 100",
+              "expr": "slo_connector_availability_success_rate:ratio_rate7d{cluster_id=~\"$Cluster\"}",
               "legendFormat": "Cluster ID: {{cluster_id}}",
               "range": true,
               "refId": "A"
@@ -384,7 +393,7 @@ data:
               "custom": {
                 "axisLabel": "",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
+                "axisSoftMax": 1,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -410,6 +419,7 @@ data:
                   "mode": "off"
                 }
               },
+              "decimals": 2,
               "links": [
                 {
                   "targetBlank": true,
@@ -418,6 +428,8 @@ data:
                 }
               ],
               "mappings": [],
+              "max": 100,
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -427,7 +439,7 @@ data:
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -437,7 +449,7 @@ data:
             "x": 12,
             "y": 16
           },
-          "id": 27,
+          "id": 35,
           "options": {
             "legend": {
               "calcs": [],
@@ -456,7 +468,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "clamp_min(( ( ( 0.005 * ( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) + sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) ) ) - sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) ) / ( 0.005 * ( sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) + sum(rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state=\"failed_but_ready\",cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) ) ) ) * 100, 0)",
+              "expr": "slo_connector_availability_remaining_error_budget:ratio_rate7d{cluster_id=~\"$Cluster\"}",
               "legendFormat": "Cluster ID: {{cluster_id}}",
               "range": true,
               "refId": "A"
@@ -519,8 +531,8 @@ data:
               "custom": {
                 "axisLabel": "Success Rate",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
-                "axisSoftMin": 99,
+                "axisSoftMax": 1,
+                "axisSoftMin": 0.95,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -566,11 +578,11 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 99.5
+                    "value": 0.995
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -580,7 +592,7 @@ data:
             "x": 0,
             "y": 32
           },
-          "id": 21,
+          "id": 37,
           "options": {
             "legend": {
               "calcs": [],
@@ -601,7 +613,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "\n( sum(rate(application_camel_context_exchanges_completed_total{cluster_id=~\"$Cluster\"}[28d])) by (cluster_id)\n/\n sum(rate(application_camel_context_exchanges_total{cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) \n) * 100",
+              "expr": "slo_connector_data_success_rate:ratio_rate28d{cluster_id=~\"$Cluster\"}",
               "instant": false,
               "legendFormat": "Cluster ID:{{cluster_id}}",
               "range": true,
@@ -625,7 +637,8 @@ data:
               "custom": {
                 "axisLabel": "",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
+                "axisSoftMax": 1,
+                "axisSoftMin": 0,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -671,11 +684,11 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 99.5
+                    "value": 0.995
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -685,7 +698,7 @@ data:
             "x": 12,
             "y": 32
           },
-          "id": 22,
+          "id": 38,
           "options": {
             "legend": {
               "calcs": [],
@@ -706,7 +719,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "clamp_min(( ( (sum(rate(application_camel_context_exchanges_total{cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) * 0.005) - sum(rate(application_camel_context_exchanges_failed_total{cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) ) / (sum(rate(application_camel_context_exchanges_total{cluster_id=~\"$Cluster\"}[28d])) by (cluster_id) * 0.005) ) * 100, 0)",
+              "expr": "slo_connector_data_remaining_error_budget:ratio_rate28d{cluster_id=~\"$Cluster\"}",
               "instant": false,
               "legendFormat": "Cluster ID:{{cluster_id}}",
               "range": true,
@@ -730,8 +743,8 @@ data:
               "custom": {
                 "axisLabel": "Success Rate",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
-                "axisSoftMin": 99,
+                "axisSoftMax": 1,
+                "axisSoftMin": 0.9,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -777,11 +790,11 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 99.5
+                    "value": 0.995
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -791,7 +804,7 @@ data:
             "x": 0,
             "y": 42
           },
-          "id": 30,
+          "id": 39,
           "options": {
             "legend": {
               "calcs": [],
@@ -812,7 +825,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "\n( sum(rate(application_camel_context_exchanges_completed_total{cluster_id=~\"$Cluster\"}[7d])) by (cluster_id)\n/\n sum(rate(application_camel_context_exchanges_total{cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) \n) * 100",
+              "expr": "slo_connector_data_success_rate:ratio_rate7d{cluster_id=~\"$Cluster\"}",
               "instant": false,
               "legendFormat": "Cluster ID:{{cluster_id}}",
               "range": true,
@@ -836,7 +849,8 @@ data:
               "custom": {
                 "axisLabel": "",
                 "axisPlacement": "auto",
-                "axisSoftMax": 100,
+                "axisSoftMax": 1,
+                "axisSoftMin": 0,
                 "barAlignment": 0,
                 "drawStyle": "line",
                 "fillOpacity": 0,
@@ -882,11 +896,11 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 99.5
+                    "value": 0.995
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
@@ -896,7 +910,7 @@ data:
             "x": 12,
             "y": 42
           },
-          "id": 31,
+          "id": 40,
           "options": {
             "legend": {
               "calcs": [],
@@ -917,7 +931,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "clamp_min(( ( (sum(rate(application_camel_context_exchanges_total{cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) * 0.005) - sum(rate(application_camel_context_exchanges_failed_total{cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) ) / (sum(rate(application_camel_context_exchanges_total{cluster_id=~\"$Cluster\"}[7d])) by (cluster_id) * 0.005) ) * 100, 0)",
+              "expr": "slo_connector_data_remaining_error_budget:ratio_rate7d{cluster_id=~\"$Cluster\"}",
               "instant": false,
               "legendFormat": "Cluster ID:{{cluster_id}}",
               "range": true,
@@ -992,6 +1006,6 @@ data:
       "timezone": "",
       "title": "Data-plane SLO",
       "uid": "Epo9T6IVk",
-      "version": 1,
+      "version": 2,
       "weekStart": ""
     }

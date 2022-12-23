@@ -35,7 +35,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1670874441248,
+      "iteration": 1671711382166,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -144,7 +144,7 @@ data:
           },
           "id": 37,
           "options": {
-            "displayMode": "gradient",
+            "displayMode": "lcd",
             "minVizHeight": 10,
             "minVizWidth": 0,
             "orientation": "horizontal",
@@ -166,7 +166,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "abs(count(cos_fleetshard_sync_connector_state) - count(cos_fleetshard_sync_connector_state offset $__range))",
+              "expr": "count(cos_fleetshard_sync_connector_state) - count(cos_fleetshard_sync_connector_state offset $__range)",
               "instant": true,
               "legendFormat": "Connectors Created",
               "range": false,
@@ -1005,10 +1005,6 @@ data:
                   {
                     "color": "green",
                     "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
                   }
                 ]
               }
@@ -1137,9 +1133,11 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
+              "exemplar": false,
               "expr": "count by(cos_connector_type_id) (min_over_time(cos_fleetshard_sync_connector_state[$__range]) == 1)",
+              "instant": true,
               "legendFormat": "__auto",
-              "range": true,
+              "range": false,
               "refId": "A"
             }
           ],
