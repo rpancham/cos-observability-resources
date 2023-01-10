@@ -1360,7 +1360,8 @@ data:
                     "value": 80
                   }
                 ]
-              }
+              },
+              "unit": "s"
             },
             "overrides": []
           },
@@ -1450,7 +1451,8 @@ data:
                     "value": 80
                   }
                 ]
-              }
+              },
+              "unit": "s"
             },
             "overrides": []
           },
@@ -1540,7 +1542,8 @@ data:
                     "value": 80
                   }
                 ]
-              }
+              },
+              "unit": "s"
             },
             "overrides": []
           },
@@ -2949,6 +2952,6 @@ data:
       "timezone": "",
       "title": "Data Plane | Cluster view",
       "uid": "ov28Nbrnz",
-      "version": 2,
+      "version": 3,
       "weekStart": ""
     }
