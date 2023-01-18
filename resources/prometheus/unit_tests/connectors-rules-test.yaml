@@ -1,0 +1,114 @@
+rule_files:
+  - /prometheus/rules.yaml
+
+evaluation_interval: 1m
+
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="cbvn81m9fbo9fmh5rn60", cos_connector_state="provisioning"}'
+        values: '1+1x119'
+
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccbpo0absr9v601smbhg", cos_connector_state="ready"}'
+        values: '1+1x119'
+
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0", cos_connector_state="ready"}'
+        values: '1+1x9 10+0x49 11+1x59'
+      - series: 'cos_fleetshard_sync_connector_state_count_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0", cos_connector_state="provisioning"}'
+        values: '0+0x9 01+1x49 51+0x59'
+
+    promql_expr_test:
+      - expr: connector_provisioning:ratio_rate5m
+        eval_time: 5m
+        exp_samples:
+          - labels: 'connector_provisioning:ratio_rate5m{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="cbvn81m9fbo9fmh5rn60", tenant="rhoc"}'
+            value: 1
+          - labels: 'connector_provisioning:ratio_rate5m{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0", tenant="rhoc"}'
+            value: 0
+
+      - expr: connector_provisioning:ratio_rate5m
+        eval_time: 15m
+        exp_samples:
+          - labels: 'connector_provisioning:ratio_rate5m{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="cbvn81m9fbo9fmh5rn60", tenant="rhoc"}'
+            value: 1
+          - labels: 'connector_provisioning:ratio_rate5m{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0", tenant="rhoc"}'
+            value: 1
+
+      - expr: connector_provisioning:ratio_rate5m
+        eval_time: 70m
+        exp_samples:
+          - labels: 'connector_provisioning:ratio_rate5m{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="cbvn81m9fbo9fmh5rn60", tenant="rhoc"}'
+            value: 1
+          - labels: 'connector_provisioning:ratio_rate5m{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0", tenant="rhoc"}'
+            value: 0
+
+    alert_rule_test:
+      - eval_time: 20m
+        alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+              cluster_id: cafmth1l8123ida8obm0
+              cos_connector_id: cbvn81m9fbo9fmh5rn60
+              tenant: rhoc
+              severity: warning
+            exp_annotations:
+              summary: |
+                the connector cbvn81m9fbo9fmh5rn60 has been in provisioning state for too long
+              description: |
+                the connector cbvn81m9fbo9fmh5rn60 in cluster cafmth1l8123ida8obm0 is in provisioning state for
+                longer than 30 minutes but the desired state is ready
+              dashboard: |
+                https://grafana.app-sre.devshift.net/d/uln0BXC7z/camelk-specific-connectors?orgId=1
+              sop_url: https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/rhoc_connectors_availability_provisioning.adoc
+      - eval_time: 50m
+        alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+              cluster_id: cafmth1l8123ida8obm0
+              cos_connector_id: cbvn81m9fbo9fmh5rn60
+              tenant: rhoc
+              severity: warning
+            exp_annotations:
+              summary: |
+                the connector cbvn81m9fbo9fmh5rn60 has been in provisioning state for too long
+              description: |
+                the connector cbvn81m9fbo9fmh5rn60 in cluster cafmth1l8123ida8obm0 is in provisioning state for
+                longer than 30 minutes but the desired state is ready
+              dashboard: |
+                https://grafana.app-sre.devshift.net/d/uln0BXC7z/camelk-specific-connectors?orgId=1
+              sop_url: https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/rhoc_connectors_availability_provisioning.adoc
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+              cluster_id: cafmth1l8123ida8obm0
+              cos_connector_id: ccqpe7g8sdu754v02vn0
+              tenant: rhoc
+              severity: warning
+            exp_annotations:
+              summary: |
+                the connector ccqpe7g8sdu754v02vn0 has been in provisioning state for too long
+              description: |
+                the connector ccqpe7g8sdu754v02vn0 in cluster cafmth1l8123ida8obm0 is in provisioning state for
+                longer than 30 minutes but the desired state is ready
+              dashboard: |
+                https://grafana.app-sre.devshift.net/d/uln0BXC7z/camelk-specific-connectors?orgId=1
+              sop_url: https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/rhoc_connectors_availability_provisioning.adoc
+      - eval_time: 65m
+        alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsAvailability5mTo30mLongProvisioning
+              cluster_id: cafmth1l8123ida8obm0
+              cos_connector_id: cbvn81m9fbo9fmh5rn60
+              tenant: rhoc
+              severity: warning
+            exp_annotations:
+              summary: |
+                the connector cbvn81m9fbo9fmh5rn60 has been in provisioning state for too long
+              description: |
+                the connector cbvn81m9fbo9fmh5rn60 in cluster cafmth1l8123ida8obm0 is in provisioning state for
+                longer than 30 minutes but the desired state is ready
+              dashboard: |
+                https://grafana.app-sre.devshift.net/d/uln0BXC7z/camelk-specific-connectors?orgId=1
+              sop_url: https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/rhoc_connectors_availability_provisioning.adoc

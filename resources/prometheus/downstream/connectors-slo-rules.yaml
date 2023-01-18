@@ -131,6 +131,22 @@ spec:
             tenant: rhoc
 
         - expr: |
+            sum by (cluster_id, cos_connector_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="provisioning"}[5m]))
+            /
+            sum by (cluster_id, cos_connector_id) (rate(cos_fleetshard_sync_connector_state_count_total{}[5m]))
+          record: connector_provisioning:ratio_rate5m
+          labels:
+            tenant: rhoc
+
+        - expr: |
+            sum by (cluster_id, cos_connector_id) (rate(cos_fleetshard_sync_connector_state_count_total{cos_connector_state="provisioning"}[30m]))
+            /
+            sum by (cluster_id, cos_connector_id) (rate(cos_fleetshard_sync_connector_state_count_total{}[30m]))
+          record: connector_provisioning:ratio_rate30m
+          labels:
+            tenant: rhoc
+
+        - expr: |
             clamp_min(
               (
                 (
@@ -236,6 +252,25 @@ spec:
           labels:
             tenant: rhoc
 
+        - alert: RHOCConnectorsAvailability5mTo30mLongProvisioning
+          expr: |
+            (
+              connector_provisioning:ratio_rate5m > 0.9
+              AND
+              connector_provisioning:ratio_rate30m > 0.9
+            )
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: |
+              the connector {{ $labels.cos_connector_id }} has been in provisioning state for too long
+            description: |
+              the connector {{ $labels.cos_connector_id }} in cluster {{ $labels.cluster_id }} is in provisioning state for
+              longer than 30 minutes but the desired state is ready
+            dashboard: |
+              https://grafana.app-sre.devshift.net/d/uln0BXC7z/camelk-specific-connectors?orgId=1
+            sop_url: https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/rhoc_connectors_availability_provisioning.adoc
 
         - alert: RHOCConnectorsAvailability5mTo1hOr30mTo6hP2BudgetBurn
           expr: |
