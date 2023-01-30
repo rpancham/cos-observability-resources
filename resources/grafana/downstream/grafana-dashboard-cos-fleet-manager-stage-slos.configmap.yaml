@@ -14,7 +14,10 @@ data:
         "list": [
           {
             "builtIn": 1,
-            "datasource": "-- Grafana --",
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
             "enable": true,
             "hide": true,
             "iconColor": "rgba(0, 211, 255, 1)",
@@ -31,9 +34,8 @@ data:
       },
       "editable": true,
       "fiscalYearStartMonth": 0,
-      "gnetId": null,
       "graphTooltip": 0,
-      "iteration": 1652101404048,
+      "iteration": 1675073756420,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -42,7 +44,9 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "$datasource",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -70,7 +74,7 @@ data:
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "8.2.7",
+          "pluginVersion": "9.0.3",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -80,6 +84,9 @@ data:
           "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "(sum(rate(api_inbound_request_count{namespace=~\"managed-connectors-.*\", code=~\"2..\"}[5m])))",
               "interval": "",
@@ -87,6 +94,9 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "(sum(rate(api_inbound_request_count{namespace=~\"managed-connectors-.*\", code=~\"4..\"}[5m])))",
               "hide": false,
@@ -95,6 +105,9 @@ data:
               "refId": "C"
             },
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "(sum(rate(api_inbound_request_count{namespace=~\"managed-connectors-.*\", code=~\"5..\"}[5m])))",
               "hide": false,
@@ -104,9 +117,7 @@ data:
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "API Availability | Request per second",
           "tooltip": {
             "shared": true,
@@ -115,9 +126,7 @@ data:
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
@@ -125,29 +134,25 @@ data:
             {
               "$$hashKey": "object:118",
               "format": "none",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "$$hashKey": "object:119",
               "format": "none",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
-          "datasource": null,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PD776AFABBE26000A"
+          },
           "description": "Calculated over the last 28 days\n\n",
           "gridPos": {
             "h": 3,
@@ -160,9 +165,16 @@ data:
             "content": "Calculated over the last 28 days",
             "mode": "markdown"
           },
-          "pluginVersion": "8.2.7",
-          "timeFrom": null,
-          "timeShift": null,
+          "pluginVersion": "9.0.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PD776AFABBE26000A"
+              },
+              "refId": "A"
+            }
+          ],
           "title": "SLOs",
           "type": "text"
         },
@@ -171,7 +183,9 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "$datasource",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -199,7 +213,7 @@ data:
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "8.2.7",
+          "pluginVersion": "9.0.3",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -209,6 +223,9 @@ data:
           "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "histogram_quantile(0.99, sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",code!~\"5..\"}[5m])) by (le))",
               "interval": "",
@@ -216,6 +233,9 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "histogram_quantile(0.95, sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",code!~\"5..\"}[5m])) by (le))",
               "interval": "",
@@ -223,6 +243,9 @@ data:
               "refId": "B"
             },
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "histogram_quantile(0.90, sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",code!~\"5..\"}[5m])) by (le))",
               "hide": false,
@@ -232,9 +255,7 @@ data:
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "API Latency",
           "tooltip": {
             "shared": true,
@@ -243,9 +264,7 @@ data:
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
@@ -254,26 +273,22 @@ data:
               "format": "s",
               "label": "",
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
-          "datasource": "$datasource",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -290,7 +305,7 @@ data:
                   },
                   {
                     "color": "green",
-                    "value": 95
+                    "value": 99.5
                   }
                 ]
               },
@@ -319,9 +334,12 @@ data:
             "showThresholdMarkers": true,
             "text": {}
           },
-          "pluginVersion": "8.2.7",
+          "pluginVersion": "9.0.3",
           "targets": [
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "(sum(rate(api_inbound_request_duration_count{namespace=~\"managed-connectors-.*\",code!~\"5..\"}[28d]))/sum(rate(api_inbound_request_duration_count{namespace=~\"managed-connectors-.*\"}[28d]))) * 100",
               "interval": "",
@@ -329,13 +347,13 @@ data:
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "API Availability (95%) ",
+          "title": "API Availability (99.5%) ",
           "type": "gauge"
         },
         {
-          "datasource": "$datasource",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
               "mappings": [],
@@ -379,9 +397,12 @@ data:
             "showThresholdMarkers": true,
             "text": {}
           },
-          "pluginVersion": "8.2.7",
+          "pluginVersion": "9.0.3",
           "targets": [
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "(sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",le=\"1\",code!~\"5..\"}[$__range]))/sum(rate(api_inbound_request_duration_count{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\"}[$__range]))) * 100",
               "interval": "",
@@ -389,13 +410,13 @@ data:
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "API Latency p99 < 1s",
           "type": "gauge"
         },
         {
-          "datasource": "$datasource",
+          "datasource": {
+            "uid": "$datasource"
+          },
           "fieldConfig": {
             "defaults": {
               "mappings": [],
@@ -439,9 +460,12 @@ data:
             "showThresholdMarkers": true,
             "text": {}
           },
-          "pluginVersion": "8.2.7",
+          "pluginVersion": "9.0.3",
           "targets": [
             {
+              "datasource": {
+                "uid": "$datasource"
+              },
               "exemplar": true,
               "expr": "(sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",le=\"0.1\",code!~\"5..\"}[$__range]))/sum(rate(api_inbound_request_duration_count{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\"}[$__range]))) * 100",
               "interval": "",
@@ -449,13 +473,13 @@ data:
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "API Latency p90 < 0.1s",
           "type": "gauge"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -521,11 +545,15 @@ data:
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(increase(api_inbound_request_count{code=~\"2..\", method=\"POST\", namespace=~\"managed-connectors-.*\", path=\"/api/connector_mgmt/v1/kafka_connectors\"}[5m]))",
               "interval": "",
@@ -533,6 +561,9 @@ data:
               "refId": "A"
             },
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(increase(api_inbound_request_count{code=~\"2..\", method=\"DELETE\", namespace=~\"managed-connectors-.*\", path=\"/api/connector_mgmt/v1/kafka_connectors/-\"}[5m]))",
               "hide": false,
@@ -546,7 +577,9 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -613,11 +646,15 @@ data:
               "placement": "bottom"
             },
             "tooltip": {
-              "mode": "multi"
+              "mode": "multi",
+              "sort": "none"
             }
           },
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "exemplar": true,
               "expr": "sum(increase(api_inbound_request_count{method=\"POST\",namespace=~\"managed-connectors-.*\",path=\"/api/connector_mgmt/v1/kafka_connector_namespaces/eval\"}[5m]))",
               "interval": "",
@@ -630,7 +667,7 @@ data:
         }
       ],
       "refresh": false,
-      "schemaVersion": 32,
+      "schemaVersion": 36,
       "style": "dark",
       "tags": [
         "cos-fleet-manager"
@@ -639,15 +676,12 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
+              "selected": false,
               "text": "app-sre-prod-04-prometheus",
               "value": "app-sre-prod-04-prometheus"
             },
-            "description": null,
-            "error": null,
             "hide": 0,
             "includeAll": false,
-            "label": null,
             "multi": false,
             "name": "datasource",
             "options": [],
@@ -692,5 +726,6 @@ data:
       "timezone": "",
       "title": "COS Fleet Manager SLOs",
       "uid": "zbx1Eg0Mz",
-      "version": 1
+      "version": 2,
+      "weekStart": ""
     }
