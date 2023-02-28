@@ -252,6 +252,70 @@ spec:
           labels:
             tenant: rhoc
 
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[1h]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[1h]))
+          record: slo_connector_data_failure_rate:ratio_rate1h
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[5m]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[5m]))
+          record: slo_connector_data_failure_rate:ratio_rate5m
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[6h]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[6h]))
+          record: slo_connector_data_failure_rate:ratio_rate6h
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[30m]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[30m]))
+          record: slo_connector_data_failure_rate:ratio_rate30m
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[3d]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[3d]))
+          record: slo_connector_data_failure_rate:ratio_rate3d
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[6h]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[6h]))
+          record: slo_connector_data_failure_rate:ratio_rate6h
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[24h]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[24h]))
+          record: slo_connector_data_failure_rate:ratio_rate24h
+          labels:
+            tenant: rhoc
+
+        - expr: |
+              sum by (cluster_id) (rate(application_camel_context_exchanges_failed_total[2h]))
+              /
+              sum by (cluster_id) (rate(application_camel_context_exchanges_total[2h]))
+          record: slo_connector_data_failure_rate:ratio_rate2h
+          labels:
+            tenant: rhoc
+
         - alert: RHOCConnectorsAvailability5mTo30mLongProvisioning
           expr: |
             (
@@ -316,3 +380,47 @@ spec:
               than 10% has been burnt in the last 3 days period'
             dashboard: 'https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1'
             sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_availability_error_budget_burnt.adoc'
+
+        - alert: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+          expr: |
+            (
+              slo_connector_data_failure_rate:ratio_rate1h > (13.44 * (1 - 0.995)) # burning through 2% of 28 days budget  within an hour
+              AND
+              slo_connector_data_failure_rate:ratio_rate5m > (13.44 * (1 - 0.995))
+              )
+              OR
+              (
+              slo_connector_data_failure_rate:ratio_rate6h > (5.6 * (1 - 0.995)) # burning through 5% of 28 days budget within 6 hours
+              AND
+              slo_connector_data_failure_rate:ratio_rate30m > (5.6 * (1 - 0.995))
+            )
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: 'High 1h/6h Connectors data budget burn for RHOC (current value: {{ $value | humanize }})'
+            description: 'An error budget greater than 2% has been burnt in the last 1h/6h period'
+            dashboard: 'https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1'
+            sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_data_error_budget_burnt.adoc'
+
+        - alert: RHOCConnectorsDataError2hTo24HOr6hTo3dBudgetBurn
+          expr: |
+            (
+              slo_connector_data_failure_rate:ratio_rate24h > (2.8 * (1 - 0.995))
+              AND
+              slo_connector_data_failure_rate:ratio_rate2h > (2.8 * (1 - 0.995))
+              )
+              OR
+              (
+              slo_connector_data_failure_rate:ratio_rate3d > (0.93 * (1 - 0.995)) # burning through 10% of 28 days budget within 3 days
+              AND
+              slo_connector_data_failure_rate:ratio_rate6h > (0.93 * (1 - 0.995))
+            )
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: 'High 3d/24h Connectors data budget burn for RHOC (current value: {{ $value | humanize }})'
+            description: 'An error budget greater than 10% has been burnt in the last 3 days period'
+            dashboard: 'https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1'
+            sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_data_error_budget_burnt.adoc'

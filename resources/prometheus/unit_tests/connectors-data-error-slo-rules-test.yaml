@@ -1,0 +1,92 @@
+rule_files:
+  - /prometheus/rules.yaml
+
+evaluation_interval: 1m
+
+tests:
+  - interval: 1m
+    input_series:
+
+      - series: 'application_camel_context_exchanges_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0"}'
+        values: '1+1x760'
+      - series: 'application_camel_context_exchanges_failed_total{cluster_id="cafmth1l8123ida8obm0", cos_connector_id="ccqpe7g8sdu754v02vn0"}'
+        values: '0+0x119 1+1x4 5+0x64 6+1x2 8+0x66 9+1x2 11+0x486 11+1x10'
+
+    # For this scenario we have 1 connectors running, which produces 1 event in 1 min. so if it runs for 250 min, it produces 250 events, and so on.
+    # So total of 40320 events a month
+    # SLO 99.5% leaving a 0,5% of error capacity.
+    # Error Budget = 40320 * 0.5 / 100 = 201.6 events of error budget in 28 days
+    alert_rule_test:
+      # RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn alert triggers when 2% of 28 days error budget get consumed in 1 hour
+      # 2% of 28 days error budget get consumed in 1 hour, mean 201.6 * 2 /100 =~ 5 error events, thus this alerts triggers when 5 events failed within an hour
+      - eval_time: 122m
+        alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts: []
+      - eval_time: 125m
+        alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+              cluster_id: cafmth1l8123ida8obm0
+              tenant: rhoc
+              severity: critical
+            exp_annotations:
+              summary: "High 1h/6h Connectors data budget burn for RHOC (current value: 83.33m)"
+              description: "An error budget greater than 2% has been burnt in the last 1h/6h period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_data_error_budget_burnt.adoc'
+
+      # RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn alert also triggers when 5% of 28 days error budget get consumed in 6 hour
+      # 5% of 28 days error budget get consumed in 6 hour, mean 201.6 * 5 /100 =~ 11 error events, thus this alerts triggers when 11 events failed within 6 hours
+      - eval_time: 260m
+        alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts: []
+      - eval_time: 263m
+        alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+              cluster_id: cafmth1l8123ida8obm0
+              tenant: rhoc
+              severity: critical
+            exp_annotations:
+              summary: "High 1h/6h Connectors data budget burn for RHOC (current value: 41.67m)"
+              description: "An error budget greater than 2% has been burnt in the last 1h/6h period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_data_error_budget_burnt.adoc'
+
+      - eval_time: 750m
+        alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts: [ ]
+      - eval_time: 760m
+        alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn
+              cluster_id: cafmth1l8123ida8obm0
+              tenant: rhoc
+              severity: critical
+            exp_annotations:
+              summary: "High 1h/6h Connectors data budget burn for RHOC (current value: 166.7m)"
+              description: "An error budget greater than 2% has been burnt in the last 1h/6h period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_data_error_budget_burnt.adoc'
+
+      # RHOCConnectorsDataError5mTo1hOr30mTo6hP2BudgetBurn alert triggers when 10% of 28 days error budget get consumed in 3 days
+      # 10% of 28 days error budget get consumed in 3 days, mean 201.6 * 10 /100 =~ 21 error events, thus this alerts triggers when 21 events failed within 3 days
+      - eval_time: 750m
+        alertname: RHOCConnectorsDataError2hTo24HOr6hTo3dBudgetBurn
+        exp_alerts: [ ]
+      - eval_time: 760m
+        alertname: RHOCConnectorsDataError2hTo24HOr6hTo3dBudgetBurn
+        exp_alerts:
+          - exp_labels:
+              alertname: RHOCConnectorsDataError2hTo24HOr6hTo3dBudgetBurn
+              cluster_id: cafmth1l8123ida8obm0
+              tenant: rhoc
+              severity: critical
+            exp_annotations:
+              summary: "High 3d/24h Connectors data budget burn for RHOC (current value: 27.6m)"
+              description: "An error budget greater than 10% has been burnt in the last 3 days period"
+              dashboard: "https://grafana.app-sre.devshift.net/d/3lmqGVq7z/data-plane-overview?orgId=1"
+              sop_url: 'https://github.com/bf2fc6cc711aee1a0c2a/cos-sre-sops/blob/main/sops/alerts/connectors_data_error_budget_burnt.adoc'
