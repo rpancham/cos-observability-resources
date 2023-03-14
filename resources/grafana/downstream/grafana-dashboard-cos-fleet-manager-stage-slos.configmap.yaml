@@ -35,7 +35,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1675073756420,
+      "iteration": 1678713652815,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -51,7 +51,7 @@ data:
           "fillGradient": 0,
           "gridPos": {
             "h": 15,
-            "w": 9,
+            "w": 10,
             "x": 0,
             "y": 0
           },
@@ -157,7 +157,7 @@ data:
           "gridPos": {
             "h": 3,
             "w": 4,
-            "x": 9,
+            "x": 10,
             "y": 0
           },
           "id": 19,
@@ -190,8 +190,8 @@ data:
           "fillGradient": 0,
           "gridPos": {
             "h": 15,
-            "w": 9,
-            "x": 13,
+            "w": 10,
+            "x": 14,
             "y": 0
           },
           "hiddenSeries": false,
@@ -287,6 +287,7 @@ data:
         },
         {
           "datasource": {
+            "type": "prometheus",
             "uid": "$datasource"
           },
           "description": "",
@@ -294,10 +295,10 @@ data:
             "defaults": {
               "decimals": 2,
               "mappings": [],
-              "max": 100,
+              "max": 1,
               "min": 0,
               "thresholds": {
-                "mode": "absolute",
+                "mode": "percentage",
                 "steps": [
                   {
                     "color": "red",
@@ -309,14 +310,14 @@ data:
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
           "gridPos": {
             "h": 4,
             "w": 4,
-            "x": 9,
+            "x": 10,
             "y": 3
           },
           "id": 10,
@@ -341,7 +342,7 @@ data:
                 "uid": "$datasource"
               },
               "exemplar": true,
-              "expr": "(sum(rate(api_inbound_request_duration_count{namespace=~\"managed-connectors-.*\",code!~\"5..\"}[28d]))/sum(rate(api_inbound_request_duration_count{namespace=~\"managed-connectors-.*\"}[28d]))) * 100",
+              "expr": "api_inbound_request_duration_count:burnrate28d",
               "interval": "",
               "legendFormat": "Create Operation",
               "refId": "A"
@@ -352,15 +353,16 @@ data:
         },
         {
           "datasource": {
+            "type": "prometheus",
             "uid": "$datasource"
           },
           "fieldConfig": {
             "defaults": {
               "mappings": [],
-              "max": 100,
+              "max": 1,
               "min": 0,
               "thresholds": {
-                "mode": "absolute",
+                "mode": "percentage",
                 "steps": [
                   {
                     "color": "red",
@@ -372,14 +374,14 @@ data:
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
           "gridPos": {
             "h": 4,
             "w": 4,
-            "x": 9,
+            "x": 10,
             "y": 7
           },
           "id": 11,
@@ -404,26 +406,27 @@ data:
                 "uid": "$datasource"
               },
               "exemplar": true,
-              "expr": "(sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",le=\"1\",code!~\"5..\"}[$__range]))/sum(rate(api_inbound_request_duration_count{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\"}[$__range]))) * 100",
+              "expr": "cos_fleetmanager_api_latency_1s_rate:burnrate28d",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
             }
           ],
-          "title": "API Latency p99 < 1s",
+          "title": "API Latency p99 < 1s (99%)",
           "type": "gauge"
         },
         {
           "datasource": {
+            "type": "prometheus",
             "uid": "$datasource"
           },
           "fieldConfig": {
             "defaults": {
               "mappings": [],
-              "max": 100,
+              "max": 1,
               "min": 0,
               "thresholds": {
-                "mode": "absolute",
+                "mode": "percentage",
                 "steps": [
                   {
                     "color": "red",
@@ -435,14 +438,14 @@ data:
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "percentunit"
             },
             "overrides": []
           },
           "gridPos": {
             "h": 4,
             "w": 4,
-            "x": 9,
+            "x": 10,
             "y": 11
           },
           "id": 14,
@@ -467,13 +470,13 @@ data:
                 "uid": "$datasource"
               },
               "exemplar": true,
-              "expr": "(sum(rate(api_inbound_request_duration_bucket{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\",le=\"0.1\",code!~\"5..\"}[$__range]))/sum(rate(api_inbound_request_duration_count{job=\"cos-fleet-manager-metrics\",namespace=~\"managed-connectors-.*\"}[$__range]))) * 100",
+              "expr": "cos_fleetmanager_api_latency_1ms_rate:burnrate28d",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
             }
           ],
-          "title": "API Latency p90 < 0.1s",
+          "title": "API Latency p90 < 0.1s (90%)",
           "type": "gauge"
         },
         {
@@ -676,7 +679,7 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
+              "selected": true,
               "text": "app-sre-prod-04-prometheus",
               "value": "app-sre-prod-04-prometheus"
             },
@@ -726,6 +729,6 @@ data:
       "timezone": "",
       "title": "COS Fleet Manager SLOs",
       "uid": "zbx1Eg0Mz",
-      "version": 2,
+      "version": 1,
       "weekStart": ""
     }
