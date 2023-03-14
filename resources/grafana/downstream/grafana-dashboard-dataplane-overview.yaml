@@ -35,7 +35,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1671711382166,
+      "iteration": 1678187329247,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -166,7 +166,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "count(cos_fleetshard_sync_connector_state) - count(cos_fleetshard_sync_connector_state offset $__range)",
+              "expr": "count((last_over_time(cos_fleetshard_sync_connector_state[$__range]) != 0) unless (cos_fleetshard_sync_connector_state offset $__range))",
               "instant": true,
               "legendFormat": "Connectors Created",
               "range": false,
@@ -287,7 +287,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "count by(cos_connector_type_id) ( cos_fleetshard_sync_connector_state unless cos_fleetshard_sync_connector_state offset $__range )",
+              "expr": "count by(cos_connector_type_id) ( (last_over_time(cos_fleetshard_sync_connector_state[$__range]) != 0) unless (cos_fleetshard_sync_connector_state offset $__range) )",
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
@@ -2022,6 +2022,6 @@ data:
       "timezone": "",
       "title": "Data Plane | Overview",
       "uid": "3lmqGVq7z",
-      "version": 1,
+      "version": 3,
       "weekStart": ""
     }

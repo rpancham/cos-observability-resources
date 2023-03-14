@@ -35,7 +35,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "iteration": 1671711628594,
+      "iteration": 1678188950261,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -153,7 +153,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "count(cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"}) - count(cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"} offset $__range)",
+              "expr": "count((last_over_time(cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"}[$__range]) != 0) unless (cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"} offset $__range))",
               "instant": true,
               "legendFormat": "Connectors Requested",
               "range": false,
@@ -274,7 +274,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "count by(cos_connector_type_id) ( cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"} unless cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"} offset $__range )",
+              "expr": "count by(cos_connector_type_id) ( (last_over_time(cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"}[$__range]) != 0) unless (cos_fleetshard_sync_connector_state{cluster_id=\"$cluster_id\",cos_namespace=~\"$namespace\"} offset $__range) )",
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
@@ -2952,6 +2952,6 @@ data:
       "timezone": "",
       "title": "Data Plane | Cluster view",
       "uid": "ov28Nbrnz",
-      "version": 3,
+      "version": 1,
       "weekStart": ""
     }
