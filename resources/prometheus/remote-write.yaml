@@ -24,6 +24,15 @@ writeRelabelConfigs:
     sourceLabels:
       - __name__
     targetLabel: __tmp_keep
+
+  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
+  - action: replace
+    regex: container_cpu_usage_seconds_total.*$
+    replacement: 'true'
+    sourceLabels:
+      - __name__
+    targetLabel: __tmp_keep
+
   # WHAT: Reports the current amount of Prometheus remote storage shards
   - action: replace
     regex: prometheus_remote_storage_shards$
