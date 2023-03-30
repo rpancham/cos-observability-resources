@@ -1,7 +1,7 @@
 writeRelabelConfigs:
   # Drop useless labels
   - action: labeldrop
-    regex: endpoint|instance|job|prometheus|pod|kube|container
+    regex: endpoint|instance|job|prometheus
 
   # WHAT: Reports the current amount of samples that have failed to be sent to observatorium
   - action: replace
