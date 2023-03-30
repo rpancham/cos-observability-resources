@@ -43,14 +43,6 @@ writeRelabelConfigs:
 
   # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
   - action: replace
-    regex: kube_pod_container_resource_requests$
-    replacement: 'true'
-    sourceLabels:
-      - __name__
-    targetLabel: __tmp_keep
-
-  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
-  - action: replace
     regex: container_memory_working_set_bytes$
     replacement: 'true'
     sourceLabels:
