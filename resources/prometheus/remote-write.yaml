@@ -1,7 +1,7 @@
 writeRelabelConfigs:
   # Drop useless labels
   - action: labeldrop
-    regex: endpoint|instance|job|prometheus|pod
+    regex: endpoint|instance|job|prometheus|pod|kube|container
 
   # WHAT: Reports the current amount of samples that have failed to be sent to observatorium
   - action: replace
@@ -35,22 +35,6 @@ writeRelabelConfigs:
 
   # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
   - action: replace
-    regex: container_cpu_usage_seconds_total*$
-    replacement: 'true'
-    sourceLabels:
-      - __name__
-     targetLabel: __tmp_keep
-
-  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
-  - action: replace
-    regex: container_cpu_usage_seconds_total$
-    replacement: 'true'
-    sourceLabels:
-      - __name__
-    targetLabel: __tmp_keep
-
-  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
-  - action: replace
     regex: kube_pod_info$
     replacement: 'true'
     sourceLabels:
@@ -75,23 +59,7 @@ writeRelabelConfigs:
 
   # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
   - action: replace
-    regex: kube_pod_container_resource_requests$
-    replacement: 'true'
-    sourceLabels:
-      - __name__
-    targetLabel: __tmp_keep
-
-  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
-  - action: replace
-    regex: container_memory_working_set_bytes.*$
-    replacement: 'true'
-    sourceLabels:
-      - __name__
-    targetLabel: __tmp_keep
-
-  # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
-  - action: replace
-    regex: kube_pod_container_resource_limits.*$
+    regex: kube_pod_container_resource_limits$
     replacement: 'true'
     sourceLabels:
       - __name__
