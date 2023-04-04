@@ -34,7 +34,7 @@ writeRelabelConfigs:
     targetLabel:
       -
   # WHAT: Reports the pods only for the defined metrics that have tried to be resent to observatorium
-  - source_labels: [ __kube_pod, __container_network, __container_memory, __container_cpu ]
+  - source_labels: kube_pod_.*|container_network_.*|container_memory_.*|container_cpu_.*
     separator: ;
     regex: (.*)
     target_label: pod
