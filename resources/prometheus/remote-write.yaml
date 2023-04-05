@@ -1,7 +1,7 @@
 writeRelabelConfigs:
   # Drop useless labels
   - action: labeldrop
-    regex: endpoint|instance|job|prometheus|pod
+    regex: endpoint|instance|job|prometheus
 
   # WHAT: Reports the current amount of samples that have failed to be sent to observatorium
   - action: replace
@@ -27,11 +27,20 @@ writeRelabelConfigs:
 
   # WHAT: Reports the current amount of samples that have tried to be resent to observatorium
   - action: replace
-    regex: container_cpu_usage_seconds_total.*$
+    regex: kube_pod_.*|container_network_.*|container_memory_.*|container_cpu_.*
     replacement: 'true'
     sourceLabels:
       - __name__
-    targetLabel: __tmp_keep
+    targetLabel:
+      -
+  # WHAT: Reports the pods only for the defined metrics that have tried to be resent to observatorium
+  - source_labels: kube_pod_.*|container_network_.*|container_memory_.*|container_cpu_.*
+    separator: ;
+    regex: (.*)
+    target_label: pod
+    replacement: ${1}
+    action: labelkeep
+
 
   # WHAT: Reports the current amount of Prometheus remote storage shards
   - action: replace
@@ -40,6 +49,7 @@ writeRelabelConfigs:
     sourceLabels:
       - __name__
     targetLabel: __tmp_keep
+
   # WHAT: Reports the desired amount of Prometheus remote storage shards
   - action: replace
     regex: prometheus_remote_storage_shards_desired$
@@ -47,6 +57,7 @@ writeRelabelConfigs:
     sourceLabels:
       - __name__
     targetLabel: __tmp_keep
+
   # WHAT: Reports maximum amount of Prometheus remote storage shards
   - action: replace
     regex: prometheus_remote_storage_shards_max$
