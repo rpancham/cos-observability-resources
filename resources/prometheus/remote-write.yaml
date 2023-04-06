@@ -31,16 +31,7 @@ writeRelabelConfigs:
     replacement: 'true'
     sourceLabels:
       - __name__
-    targetLabel:
-      -
-  # WHAT: Reports the pods only for the defined metrics that have tried to be resent to observatorium
-  - source_labels: kube_pod_.*|container_network_.*|container_memory_.*|container_cpu_.*
-    separator: ;
-    regex: (.*)
-    target_label: pod
-    replacement: ${1}
-    action: labelkeep
-
+    targetLabel: __tmp_keep
 
   # WHAT: Reports the current amount of Prometheus remote storage shards
   - action: replace
