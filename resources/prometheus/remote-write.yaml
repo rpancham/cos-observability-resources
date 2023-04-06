@@ -137,6 +137,7 @@ writeRelabelConfigs:
       - __name__
     targetLabel: __tmp_keep
 
+
   # WHAT: Reports the current amount of Prometheus remote storage shards
   - action: replace
     regex: prometheus_remote_storage_shards$
